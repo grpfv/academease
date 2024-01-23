@@ -1,7 +1,9 @@
 package com.example.project_acadeamease1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +20,8 @@ public class MainActivity4 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main4);
+
+        View coursesBtn = findViewById(R.id.sectionBox2);
 
         // Get the current Firebase user
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -38,5 +42,7 @@ public class MainActivity4 extends AppCompatActivity {
             TextView todayDateTextView = findViewById(R.id.day);
             todayDateTextView.setText(todayDate);
         }
+
+        coursesBtn.setOnClickListener(v->startActivity(new Intent(MainActivity4.this, Courses.class)));
     }
 }

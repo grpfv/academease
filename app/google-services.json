@@ -1,10 +1,30 @@
 {
   "project_info": {
     "project_number": "286632193706",
+    "firebase_url": "https://academease--project-default-rtdb.firebaseio.com",
     "project_id": "academease--project",
     "storage_bucket": "academease--project.appspot.com"
   },
   "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286632193706:android:c6ba450620140f4d252ad3",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqcaZ6iDdCYFoKfUxqbqMrCEnvzvL81CQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:286632193706:android:bbfe6250419b0914252ad3",
