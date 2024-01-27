@@ -12,5 +12,23 @@ public class Utility {
         return FirebaseFirestore.getInstance().collection("Courses").document(currentUser.getUid()).collection("my_Courses");
 
     }
+
+    static CollectionReference getCollectionReferenceForAlbum(){
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        return FirebaseFirestore.getInstance().collection("Album").document(currentUser.getUid()).collection("my_Album");
+
+    }
+
+    static CollectionReference getCollectionReferenceForNotes(){
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        return FirebaseFirestore.getInstance().collection("Notes").document(currentUser.getUid()).collection("my_Notes");
+
+    }
+
+    static CollectionReference getCollectionReferenceFoFiles(){
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        return FirebaseFirestore.getInstance().collection("Files").document(currentUser.getUid()).collection("my_Files");
+
+    }
 }
 

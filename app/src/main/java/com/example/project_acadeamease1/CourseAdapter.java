@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public class CourseAdapter extends FirestoreRecyclerAdapter<CourseModel, CourseAdapter.CourseViewHolder> {
+public class    CourseAdapter extends FirestoreRecyclerAdapter<CourseModel, CourseAdapter.CourseViewHolder> {
 
     Context context;
 
@@ -27,7 +27,7 @@ public class CourseAdapter extends FirestoreRecyclerAdapter<CourseModel, CourseA
     protected void onBindViewHolder(@NonNull CourseViewHolder holder, int position, @NonNull CourseModel course) {
         holder.courseSubject.setText(course.subject);
 
-        /*holder.itemView.setOnClickListener(v->{
+        holder.itemView.setOnClickListener(v->{
             Intent intent = new Intent(context, CourseDetails.class);
             intent.putExtra("subject",course.subject);
             intent.putExtra("instructor", course.instructor);
@@ -35,7 +35,7 @@ public class CourseAdapter extends FirestoreRecyclerAdapter<CourseModel, CourseA
             String courseId = this.getSnapshots().getSnapshot(position).getId();
             intent.putExtra("courseId",courseId);
             context.startActivity(intent);
-        });*/
+        });
     }
 
     @NonNull
