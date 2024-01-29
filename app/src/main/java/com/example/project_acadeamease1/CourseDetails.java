@@ -12,6 +12,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import android.widget.TextView;
 
 public class CourseDetails extends AppCompatActivity {
     private TabLayout tabLayout;
@@ -34,6 +35,16 @@ public class CourseDetails extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         adapter = new FragmentAdapter(fragmentManager, getLifecycle());
         viewPager.setAdapter(adapter);
+
+        String subject = getIntent().getStringExtra("subject");
+        String instructor = getIntent().getStringExtra("instructor");
+
+        // Update UI with the retrieved data
+        TextView subjectTextView = findViewById(R.id.subject);
+        TextView instructorTextView = findViewById(R.id.Instructor);
+
+        subjectTextView.setText(" " + subject);
+        instructorTextView.setText(" " + instructor);
 
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);

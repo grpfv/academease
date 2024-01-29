@@ -7,4 +7,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_album">addalbum\n</string>
     <string name="img">image\n</string>
+    <string name="backbutton">backbutt\n</string>
+    <string name="add_a_caption">add a caption</string>
+    <string name="uploadimage">uploadimg</string>
+    <string name="day_time_in_time_out">DAY | TIME IN - TIME OUT</string>
+    <string name="edit">edit</string>
 </resources>
