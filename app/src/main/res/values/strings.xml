@@ -12,4 +12,10 @@
     <string name="uploadimage">uploadimg</string>
     <string name="day_time_in_time_out">DAY | TIME IN - TIME OUT</string>
     <string name="edit">edit</string>
+    <string name="notestitle">NOTES</string>
+    <string name="delete_note">DELETE NOTE</string>
+    <string name="notescontent">Content</string>
+    <string name="notetitle">Title</string>
+    <string name="notespagetitile">ADD NOTES</string>
+    <string name="savenotebtn">TODO</string>
 </resources>
