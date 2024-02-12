@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/gridCaption"
         android:text="Captions"
-        android:textSize="20sp"
+        android:textSize="14sp"
         android:gravity="center"
         android:textColor="@color/green"
         android:layout_marginTop="8dp"/>
