@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddtoFiles">
+
+    <TextView
+        android:id="@+id/text_pdf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/upload_filetxt"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/green"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/text_pdf">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="18dp"
+            android:background="@drawable/textboxbg"
+            android:hint="@string/enter_file_name"
+            android:padding="10dp"
+            android:textColor="@color/green"
+            android:textColorHint="@color/black"
+            android:textSize="22sp"
+            tools:ignore="TextSizeCheck">
+
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/upload_btn"
+        android:layout_width="108dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="145dp"
+        android:layout_marginTop="264dp"
+        android:background="@drawable/buttonbg"
+        android:padding="18dp"
+        android:text="@string/upload"
+        android:textColor="@color/mocha" />
+
+    <Button
+        android:id="@+id/viewPDF_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="344dp"
+        android:background="@drawable/buttonbg"
+        android:padding="18dp"
+        android:text="view files"
+        android:textColor="@color/mocha" />
+
+</RelativeLayout>

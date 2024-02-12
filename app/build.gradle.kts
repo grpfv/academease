@@ -52,4 +52,7 @@ dependencies {
     annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
     implementation ("com.makeramen:roundedimageview:2.3.0")
 
+    //implementation ("com.google.firebase:firebase-auth:23.0.0") // Use the latest version
+
+
 }

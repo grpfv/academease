@@ -25,8 +25,8 @@ public class Tab_notes extends Fragment {
 
     FloatingActionButton addNoteBtn;
     RecyclerView recyclerView;
-    ImageButton menuBtn;
     NoteAdapter noteAdapter;
+    String courseId;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,7 +39,8 @@ public class Tab_notes extends Fragment {
         addNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(requireContext(), AddtoNotes.class); // use requireContext() instead of "Tab_album.this"
+                Intent intent = new Intent(requireContext(), AddtoNotes.class);
+                intent.putExtra("courseId", courseId);
                 startActivity(intent);
             }
         });
@@ -77,5 +78,4 @@ public class Tab_notes extends Fragment {
         noteAdapter.notifyDataSetChanged();
     }
 
-    // onResume is not needed for FirestoreRecyclerAdapter
 }

@@ -18,4 +18,11 @@
     <string name="notetitle">Title</string>
     <string name="notespagetitile">ADD NOTES</string>
     <string name="savenotebtn">TODO</string>
+    <string name="selecet_file">selecet file</string>
+    <string name="upload_file">upload file</string>
+    <string name="retrieve_files">retrieve files</string>
+    <string name="enter_file_name">enter file name</string>
+    <string name="upload_filetxt">Upload file</string>
+    <string name="upload">Upload</string>
+    <string name="upload_image">Upload Image</string>
 </resources>

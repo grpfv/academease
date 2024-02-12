@@ -12,13 +12,13 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends BaseAdapter {
+public class AlbumAdapter extends BaseAdapter {
 
     private ArrayList<DataClass> dataList;
     private Context context;
     LayoutInflater layoutInflater;
 
-    public MyAdapter(Context context, ArrayList<DataClass> dataList) {
+    public AlbumAdapter(Context context, ArrayList<DataClass> dataList) {
         this.context = context;
         this.dataList = dataList;
     }
@@ -54,6 +54,11 @@ public class MyAdapter extends BaseAdapter {
         Glide.with(context).load(dataList.get(i).getImageURL()).into(gridImage);
         gridCaption.setText(dataList.get(i).getCaption());
 
+
         return view;
+
+
+
     }
+
 }

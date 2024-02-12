@@ -5,11 +5,19 @@ import com.google.firebase.Timestamp;
 
 public class CourseModel {
 
-    String subject;
-    String instructor;
+    String subject, instructor, courseId,title, content;
     Timestamp timestamp;
 
+
     public CourseModel() {
+    }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 
     public String getSubject() {
@@ -34,6 +42,23 @@ public class CourseModel {
 
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
+    }
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }
 

@@ -66,7 +66,7 @@
             android:autofillHints=""
             android:gravity="top"
             android:hint="@string/notescontent"
-            android:inputType="text|textMultiLine"
+            android:inputType="none"
             android:minLines="16"
             android:padding="12dp"
             android:textColor="@color/black"

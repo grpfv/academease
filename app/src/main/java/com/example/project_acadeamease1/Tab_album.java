@@ -24,7 +24,7 @@ public class Tab_album extends Fragment {
     FloatingActionButton fab;
     private GridView gridView;
     private ArrayList<DataClass> dataList;
-    private MyAdapter adapter;
+    private AlbumAdapter adapter;
     final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Images");
 
     @Nullable
@@ -35,7 +35,7 @@ public class Tab_album extends Fragment {
         fab = view.findViewById(R.id.fab);
         gridView = view.findViewById(R.id.gridView);
         dataList = new ArrayList<>();
-        adapter = new MyAdapter(requireContext(), dataList); // use requireContext() instead of "this"
+        adapter = new AlbumAdapter(requireContext(), dataList); // use requireContext() instead of "this"
         gridView.setAdapter(adapter);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -62,6 +62,11 @@ public class Tab_album extends Fragment {
             }
         });
 
+
+
         return view;
+
+
+
     }
 }

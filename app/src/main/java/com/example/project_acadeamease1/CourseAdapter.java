@@ -33,7 +33,7 @@ public class    CourseAdapter extends FirestoreRecyclerAdapter<CourseModel, Cour
             intent.putExtra("instructor", course.instructor);
 
             String courseId = this.getSnapshots().getSnapshot(position).getId();
-            intent.putExtra("courseId",courseId);
+            intent.putExtra("courseId",course.courseId);
             context.startActivity(intent);
         });
     }
@@ -56,4 +56,5 @@ public class    CourseAdapter extends FirestoreRecyclerAdapter<CourseModel, Cour
         }
     }
 }
+
 
