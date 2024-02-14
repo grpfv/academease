@@ -78,9 +78,9 @@ public class AddtoNotes extends AppCompatActivity {
         DocumentReference documentReference;
         if(isEditMode){
             //update note
-            documentReference = Utility.getCollectionReferenceForNotes().document(docId);
+            documentReference = Utility.getCollectionReferenceForNotes("kALPz8E4QdH9EyIUcWch").document(docId);
         }else{
-            documentReference = Utility.getCollectionReferenceForNotes().document();
+            documentReference = Utility.getCollectionReferenceForNotes("kALPz8E4QdH9EyIUcWch").document();
         }
 
         documentReference.set(note).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -98,7 +98,7 @@ public class AddtoNotes extends AppCompatActivity {
 
     void deleteNoteFromFirebase(){
         DocumentReference documentReference;
-        documentReference = Utility.getCollectionReferenceForNotes().document(docId);
+        documentReference = Utility.getCollectionReferenceForNotes("kALPz8E4QdH9EyIUcWch").document(docId);
 
         documentReference.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

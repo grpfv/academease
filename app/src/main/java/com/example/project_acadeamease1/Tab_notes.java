@@ -50,8 +50,8 @@ public class Tab_notes extends Fragment {
     }
 
     void setupRecyclerView() {
-        Query query = Utility.getCollectionReferenceForNotes().orderBy("timestamp", Query.Direction.DESCENDING);
-
+        Query query = Utility.getCollectionReferenceForNotes("kALPz8E4QdH9EyIUcWch").orderBy("timestamp", Query.Direction.DESCENDING);
+                                                            //test course id
         FirestoreRecyclerOptions<DataClass> options = new FirestoreRecyclerOptions.Builder<DataClass>()
                 .setQuery(query, DataClass.class).build();
 

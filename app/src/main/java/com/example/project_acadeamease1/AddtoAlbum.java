@@ -22,8 +22,6 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -38,7 +36,7 @@ public class AddtoAlbum extends AppCompatActivity {
     EditText uploadCaption;
     ProgressBar progressBar;
     private Uri imageUri;
-    final  private CollectionReference databaseReference = Utility.getCollectionReferenceForAlbum("kALPz8E4QdH9EyIUcWch"); //test lang
+    final  private CollectionReference forAlbum = Utility.getCollectionReferenceForAlbum("kALPz8E4QdH9EyIUcWch"); //test lang
     final private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
     @Override
@@ -92,13 +90,13 @@ public class AddtoAlbum extends AppCompatActivity {
     //Outside onCreate
     private void uploadToFirebase(Uri uri) {
         String caption = uploadCaption.getText().toString();
-        final StorageReference imageReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(uri));
+        final StorageReference imageReference = storageReference.child("Album" + System.currentTimeMillis() + "." + getFileExtension(uri));
 
         imageReference.putFile(uri).addOnSuccessListener(taskSnapshot -> {
                     imageReference.getDownloadUrl().addOnSuccessListener(uriResult -> {
                         DataClass dataClass = new DataClass(uriResult.toString(), caption);
 
-                        databaseReference.add(dataClass)
+                        forAlbum.add(dataClass)
                                 .addOnSuccessListener(documentReference -> {
                                     progressBar.setVisibility(View.INVISIBLE);
                                     Toast.makeText(AddtoAlbum.this, "Uploaded", Toast.LENGTH_SHORT).show();

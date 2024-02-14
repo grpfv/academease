@@ -29,11 +29,18 @@ public class Utility {
             return null;
         }
     }
-
-    static CollectionReference getCollectionReferenceForNotes(){
+    static CollectionReference getCollectionReferenceForNotes(String courseId) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        return FirebaseFirestore.getInstance().collection("Notes").document(currentUser.getUid()).collection("my_Notes");
+        if (currentUser != null) {
+            return FirebaseFirestore.getInstance().collection("Courses")
+                    .document(currentUser.getUid())
+                    .collection("my_Courses")
+                    .document(courseId)
+                    .collection("Notes");
+        } else {
 
+            return null;
+        }
     }
 
     static String timestampToString(Timestamp timestamp){
