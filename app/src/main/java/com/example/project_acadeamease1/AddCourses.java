@@ -66,6 +66,7 @@ public class AddCourses extends DialogFragment {
         course.setInstructor(instructor);
         course.setTimestamp(Timestamp.now());
 
+
         saveCoursesToFirebase(course);
     }
 

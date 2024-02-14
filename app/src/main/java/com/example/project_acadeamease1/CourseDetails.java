@@ -38,6 +38,7 @@ public class CourseDetails extends AppCompatActivity {
 
         String subject = getIntent().getStringExtra("subject");
         String instructor = getIntent().getStringExtra("instructor");
+        String courseId = getIntent().getStringExtra("courseId");
 
         // Update UI with the retrieved data
         TextView subjectTextView = findViewById(R.id.subject);

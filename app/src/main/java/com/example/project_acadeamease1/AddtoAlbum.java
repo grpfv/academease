@@ -36,13 +36,14 @@ public class AddtoAlbum extends AppCompatActivity {
     EditText uploadCaption;
     ProgressBar progressBar;
     private Uri imageUri;
-    final  private CollectionReference forAlbum = Utility.getCollectionReferenceForAlbum("kALPz8E4QdH9EyIUcWch"); //test lang
     final private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+    private String courseId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addto_album);
+        courseId = getIntent().getStringExtra("courseId");
 
         uploadButton = findViewById(R.id.uploadButton);
         uploadCaption = findViewById(R.id.enter_Caption);
@@ -91,6 +92,7 @@ public class AddtoAlbum extends AppCompatActivity {
     private void uploadToFirebase(Uri uri) {
         String caption = uploadCaption.getText().toString();
         final StorageReference imageReference = storageReference.child("Album" + System.currentTimeMillis() + "." + getFileExtension(uri));
+        CollectionReference forAlbum = Utility.getCollectionReferenceForAlbum(courseId); //test lang
 
         imageReference.putFile(uri).addOnSuccessListener(taskSnapshot -> {
                     imageReference.getDownloadUrl().addOnSuccessListener(uriResult -> {

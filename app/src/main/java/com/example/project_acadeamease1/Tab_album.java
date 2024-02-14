@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,8 +32,20 @@ public class Tab_album extends Fragment {
     private GridView gridView;
     private ArrayList<DataClass> dataList;
     private AlbumAdapter adapter;
-    private final CollectionReference databaseReference = Utility.getCollectionReferenceForAlbum("kALPz8E4QdH9EyIUcWch");
-        //FirebaseFirestore.getInstance().collection("Images");
+
+    //FirebaseFirestore.getInstance().collection("Images");
+    String courseId;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        courseId = getCourseId(requireContext()); // Retrieve courseId
+    }
+
+    private String getCourseId(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("courseId", "");
+    }
 
     @Nullable
     @Override
@@ -45,7 +58,7 @@ public class Tab_album extends Fragment {
         adapter = new AlbumAdapter(requireContext(), dataList); // Pass albumCollection to the adapter
         gridView.setAdapter(adapter);
 
-        // Add ValueEventListener to update the grid when data changes in Firestore
+        CollectionReference databaseReference = Utility.getCollectionReferenceForAlbum(courseId);
         databaseReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {

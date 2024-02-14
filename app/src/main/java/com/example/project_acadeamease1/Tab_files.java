@@ -1,11 +1,12 @@
 package com.example.project_acadeamease1;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
@@ -33,6 +34,18 @@ public class Tab_files extends Fragment {
     FloatingActionButton floatingActionButton;
 
     List<pdfClass> uploads;
+    String courseId;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        courseId = getCourseId(requireContext()); // Retrieve courseId
+    }
+
+    private String getCourseId(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("courseId", "");
+    }
 
     @Nullable
     @Override
@@ -57,11 +70,11 @@ public class Tab_files extends Fragment {
             }
         });
 
-
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(requireContext(), AddtoFiles.class);
+                intent.putExtra("courseId", courseId); // Pass courseId to AddtoFiles activity
                 startActivity(intent);
             }
         });
@@ -76,7 +89,7 @@ public class Tab_files extends Fragment {
                 .collection("Courses")
                 .document(currentUser.getUid())
                 .collection("my_Courses")
-                .document("kALPz8E4QdH9EyIUcWch") //course id from firestore
+                .document(courseId)
                 .collection("Files");
 
         collectionReference.get().addOnCompleteListener(task -> {

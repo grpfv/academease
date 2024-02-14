@@ -10,6 +10,7 @@ public class CourseModel {
 
 
     public CourseModel() {
+
     }
 
     public String getCourseId() {

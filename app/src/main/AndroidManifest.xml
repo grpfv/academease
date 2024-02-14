@@ -19,12 +19,6 @@
             android:name=".AddtoFiles"
             android:exported="false" />
         <activity
-            android:name=".UploadPDF"
-            android:exported="false" />
-        <activity
-            android:name=".RetrievePDFActivvity"
-            android:exported="false" />
-        <activity
             android:name=".AddtoNotes"
             android:exported="false" />
         <activity

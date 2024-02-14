@@ -1,6 +1,8 @@
 package com.example.project_acadeamease1;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -29,13 +31,18 @@ public class Tab_notes extends Fragment {
     String courseId;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        courseId = getCourseId(requireContext()); // Retrieve courseId
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tab_notes, container, false);
 
-        addNoteBtn = view.findViewById(R.id.add_note_btn); // Use view.findViewById() to find views in the fragment
+        addNoteBtn = view.findViewById(R.id.add_note_btn);
         recyclerView = view.findViewById(R.id.recycler_view_notes);
 
-        //addNoteBtn.setOnClickListener(v -> startActivity(new Intent(requireActivity(), AddtoNotes.class))); // Use requireActivity() instead of Tab_notes.this
         addNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,21 +51,25 @@ public class Tab_notes extends Fragment {
                 startActivity(intent);
             }
         });
-        setupRecyclerView();
+
+        setupRecyclerView(); // Initialize RecyclerView after setting courseId
 
         return view;
     }
 
+    public String getCourseId(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("courseId", "");
+    }
+
     void setupRecyclerView() {
-        Query query = Utility.getCollectionReferenceForNotes("kALPz8E4QdH9EyIUcWch").orderBy("timestamp", Query.Direction.DESCENDING);
-                                                            //test course id
+        Query query = Utility.getCollectionReferenceForNotes(courseId).orderBy("timestamp", Query.Direction.DESCENDING);
+
         FirestoreRecyclerOptions<DataClass> options = new FirestoreRecyclerOptions.Builder<DataClass>()
                 .setQuery(query, DataClass.class).build();
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext())); // Use requireContext() instead of this
-
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         noteAdapter = new NoteAdapter(options, requireActivity());
-
         recyclerView.setAdapter(noteAdapter);
     }
 
@@ -73,9 +84,10 @@ public class Tab_notes extends Fragment {
         super.onStop();
         noteAdapter.stopListening();
     }
+
+    @Override
     public void onResume() {
         super.onResume();
         noteAdapter.notifyDataSetChanged();
     }
-
 }
