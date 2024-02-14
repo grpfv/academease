@@ -51,7 +51,6 @@ public class    CourseAdapter extends FirestoreRecyclerAdapter<CourseModel, Cour
 
         public CourseViewHolder(@NonNull View itemView) {
             super(itemView);
-
             courseSubject = itemView.findViewById(R.id.course_Subject);
         }
     }

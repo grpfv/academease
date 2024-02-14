@@ -16,10 +16,18 @@ public class Utility {
 
     }
 
-    static CollectionReference getCollectionReferenceForAlbum(){
+    static CollectionReference getCollectionReferenceForAlbum(String courseId) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        return FirebaseFirestore.getInstance().collection("Album").document(currentUser.getUid()).collection("my_Album");
+        if (currentUser != null) {
+            return FirebaseFirestore.getInstance().collection("Courses")
+                    .document(currentUser.getUid())
+                    .collection("my_Courses")
+                    .document(courseId)
+                    .collection("Album");
+        } else {
 
+            return null;
+        }
     }
 
     static CollectionReference getCollectionReferenceForNotes(){
@@ -27,14 +35,23 @@ public class Utility {
         return FirebaseFirestore.getInstance().collection("Notes").document(currentUser.getUid()).collection("my_Notes");
 
     }
+
     static String timestampToString(Timestamp timestamp){
         return new SimpleDateFormat("MM/dd/yyyy").format(timestamp.toDate());
     }
 
-    static CollectionReference getCollectionReferenceFoFiles(){
+    static CollectionReference getCollectionReferenceForFiles(String courseId) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        return FirebaseFirestore.getInstance().collection("Files").document(currentUser.getUid()).collection("my_Files");
+        if (currentUser != null) {
+            return FirebaseFirestore.getInstance().collection("Courses")
+                    .document(currentUser.getUid())
+                    .collection("my_Courses")
+                    .document(courseId)
+                    .collection("Files");
+        } else {
 
+            return null;
+        }
     }
 
 

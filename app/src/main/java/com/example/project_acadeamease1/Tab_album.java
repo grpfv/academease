@@ -1,7 +1,11 @@
 package com.example.project_acadeamease1;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +15,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -25,7 +33,8 @@ public class Tab_album extends Fragment {
     private GridView gridView;
     private ArrayList<DataClass> dataList;
     private AlbumAdapter adapter;
-    final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Images");
+    private final CollectionReference databaseReference = Utility.getCollectionReferenceForAlbum("kALPz8E4QdH9EyIUcWch");
+        //FirebaseFirestore.getInstance().collection("Images");
 
     @Nullable
     @Override
@@ -35,22 +44,24 @@ public class Tab_album extends Fragment {
         fab = view.findViewById(R.id.fab);
         gridView = view.findViewById(R.id.gridView);
         dataList = new ArrayList<>();
-        adapter = new AlbumAdapter(requireContext(), dataList); // use requireContext() instead of "this"
+        adapter = new AlbumAdapter(requireContext(), dataList); // Pass albumCollection to the adapter
         gridView.setAdapter(adapter);
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        // Add ValueEventListener to update the grid when data changes in Firestore
+        databaseReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                dataList.clear(); // clear the list before adding new data
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    DataClass dataClass = dataSnapshot.getValue(DataClass.class);
+            public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.e("Tab_album", "Error fetching images", e);
+                    return;
+                }
+
+                dataList.clear(); // Clear the list before adding new data
+                for (QueryDocumentSnapshot document : querySnapshot) {
+                    DataClass dataClass = document.toObject(DataClass.class);
                     dataList.add(dataClass);
                 }
                 adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
             }
         });
 
@@ -62,11 +73,6 @@ public class Tab_album extends Fragment {
             }
         });
 
-
-
         return view;
-
-
-
     }
 }

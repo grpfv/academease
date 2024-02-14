@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -49,7 +50,6 @@ public class AddtoFiles extends AppCompatActivity {
         setContentView(R.layout.activity_addto_files);
 
         upload_btn = findViewById(R.id.upload_btn);
-        viewPDF_btn = findViewById(R.id.viewPDF_btn);
         pdf_name = findViewById(R.id.name);
 
         //db
@@ -62,14 +62,6 @@ public class AddtoFiles extends AppCompatActivity {
                 selectFiles();
             }
         });
-
-
-        viewPDF_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                retrieveFiles();
-            }
-        });
     }
 
     private void selectFiles() {
@@ -77,31 +69,6 @@ public class AddtoFiles extends AppCompatActivity {
         intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select files..."), 1);
-    }
-    private void retrieveFiles() {
-        FirebaseFirestore.getInstance().collection("my_Courses")
-                .document("kALPz8E4QdH9EyIUcWch")
-                .collection("my_Files")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        List<pdfClass> pdfList = new ArrayList<>();
-                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            pdfClass pdf = documentSnapshot.toObject(pdfClass.class);
-                            pdfList.add(pdf);
-                        }
-                        // Now you have the list of pdfClass objects, you can display them as needed
-                        // For example, you can pass this list to another activity or fragment to display
-                        // Or display them in a RecyclerView or ListView
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AddtoFiles.this, "Failed to retrieve files", Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
     @Override
@@ -113,13 +80,13 @@ public class AddtoFiles extends AppCompatActivity {
         }
     }
 
-
     private void UploadFiles(Uri data) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Uploading....");
+        progressDialog.show();
 
         // Initialize Firebase Storage reference
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("pdfs").child(pdf_name.getText().toString() + ".pdf");
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Files").child(pdf_name.getText().toString() + ".pdf");
 
         storageReference.putFile(data)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -132,7 +99,14 @@ public class AddtoFiles extends AppCompatActivity {
                             public void onSuccess(Uri uri) {
                                 // Create a pdfClass object and add it to Firestore
                                 pdfClass pdfClass = new pdfClass(pdf_name.getText().toString(), uri.toString());
-                                FirebaseFirestore.getInstance().collection("my_Courses").document("kALPz8E4QdH9EyIUcWch").collection("my_Files").add(pdfClass)
+                                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                                FirebaseFirestore.getInstance()
+                                        .collection("Courses")
+                                        .document(currentUser.getUid())
+                                        .collection("my_Courses")
+                                        .document("kALPz8E4QdH9EyIUcWch")           //try lang course id from firestore
+                                        .collection("Files")
+                                        .add(pdfClass)
                                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                             @Override
                                             public void onSuccess(DocumentReference documentReference) {

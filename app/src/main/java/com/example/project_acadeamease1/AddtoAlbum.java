@@ -24,10 +24,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AddtoAlbum extends AppCompatActivity {
 
@@ -36,7 +38,7 @@ public class AddtoAlbum extends AppCompatActivity {
     EditText uploadCaption;
     ProgressBar progressBar;
     private Uri imageUri;
-    final  private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Images");
+    final  private CollectionReference databaseReference = Utility.getCollectionReferenceForAlbum("kALPz8E4QdH9EyIUcWch"); //test lang
     final private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
     @Override
@@ -88,41 +90,34 @@ public class AddtoAlbum extends AppCompatActivity {
         });
     }
     //Outside onCreate
-    private void uploadToFirebase(Uri uri){
+    private void uploadToFirebase(Uri uri) {
         String caption = uploadCaption.getText().toString();
         final StorageReference imageReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(uri));
 
-        imageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        DataClass dataClass = new DataClass(uri.toString(), caption);
-                        String key = databaseReference.push().getKey();
-                        databaseReference.child(key).setValue(dataClass);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText(AddtoAlbum.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(AddtoAlbum.this, CourseDetails.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                progressBar.setVisibility(View.VISIBLE);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                progressBar.setVisibility(View.INVISIBLE);
-                Toast.makeText(AddtoAlbum.this, "Failed", Toast.LENGTH_SHORT).show();
-            }
-        });
+        imageReference.putFile(uri).addOnSuccessListener(taskSnapshot -> {
+                    imageReference.getDownloadUrl().addOnSuccessListener(uriResult -> {
+                        DataClass dataClass = new DataClass(uriResult.toString(), caption);
 
+                        databaseReference.add(dataClass)
+                                .addOnSuccessListener(documentReference -> {
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                    Toast.makeText(AddtoAlbum.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(AddtoAlbum.this, CourseDetails.class);
+                                    startActivity(intent);
+                                    finish();
+                                })
+                                .addOnFailureListener(e -> {
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                    Toast.makeText(AddtoAlbum.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
+                                });
+                    });
+                }).addOnProgressListener(taskSnapshot -> progressBar.setVisibility(View.VISIBLE))
+                .addOnFailureListener(e -> {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(AddtoAlbum.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
+                });
     }
+
     private String getFileExtension(Uri fileUri){
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
