@@ -54,7 +54,6 @@ dependencies {
 
     implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.0")
     implementation("com.github.dhaval2404:imagepicker:2.1")
-    implementation("com.github.barteksc:android-pdf-viewer:3.1.0-beta.1")
 
 
 }
