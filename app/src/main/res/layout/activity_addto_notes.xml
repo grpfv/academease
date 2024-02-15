@@ -48,21 +48,25 @@
         android:id="@+id/notes_content"
         android:layout_width="336dp"
         android:layout_height="400dp"
-        android:gravity="top"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="20dp"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
         android:autofillHints=" ..."
         android:background="@drawable/textboxbg2"
         android:inputType="text|textEnableTextConversionSuggestions|textImeMultiLine|textMultiLine"
         android:singleLine="false"
         android:textColor="#113946"
         android:textSize="15sp"
+        android:gravity="center"
+        android:justificationMode="inter_word"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notes_title"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
 
     <ImageView
         android:id="@+id/mic"

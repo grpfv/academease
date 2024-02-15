@@ -1,40 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="12dp"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearLayout2"
+    android:layout_width="350dp"
+    android:layout_height="100dp"
     android:layout_marginVertical="8dp"
+    android:background="@drawable/border"
     android:backgroundTint="@color/white"
-    android:background="@drawable/border">
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:paddingHorizontal="3dp"
+    android:paddingVertical="2dp">
 
     <TextView
         android:id="@+id/note_title_text_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:text="Note Title"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/green"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/note_content_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/note_content_text_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Note Content"
-        android:maxLines="2"
+        android:layout_marginBottom="36dp"
         android:ellipsize="end"
-        android:textColor="@color/black"
+        android:maxLines="2"
+        android:text="Note Content"
+        android:textColor="@color/green"
         android:textSize="16sp"
-        android:layout_marginVertical="4dp"/>
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textAlignment="textStart"
+        android:justificationMode="inter_word"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/note_timestamp_text_view"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:gravity="right"
         android:text="mm/dd/yy"
         android:textSize="12sp"
-        android:gravity="right"
-        android:layout_marginVertical="4dp"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/note_content_text_view" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

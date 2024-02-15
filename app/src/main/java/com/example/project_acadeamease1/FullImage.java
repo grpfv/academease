@@ -3,9 +3,11 @@ package com.example.project_acadeamease1;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -61,7 +63,10 @@ public class FullImage extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(FullImage.this, "Image deleted", Toast.LENGTH_SHORT).show();
+                        // Pass the deleted image identifier back to the Tab_album fragment
+                        Intent intent = new Intent();
+                        intent.putExtra("deletedImageUrl", imageUrl);
+                        setResult(Activity.RESULT_OK, intent);
                         finish();
                     }
                 })
