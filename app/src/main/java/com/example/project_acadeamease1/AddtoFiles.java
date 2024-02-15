@@ -48,7 +48,6 @@ public class AddtoFiles extends AppCompatActivity {
         upload_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 selectFiles();
             }
         });

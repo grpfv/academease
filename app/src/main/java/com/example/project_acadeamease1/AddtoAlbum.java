@@ -37,7 +37,7 @@ public class AddtoAlbum extends AppCompatActivity {
     ProgressBar progressBar;
     private Uri imageUri;
     final private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    private String courseId;
+    String courseId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,18 +92,18 @@ public class AddtoAlbum extends AppCompatActivity {
     private void uploadToFirebase(Uri uri) {
         String caption = uploadCaption.getText().toString();
         final StorageReference imageReference = storageReference.child("Album" + System.currentTimeMillis() + "." + getFileExtension(uri));
-        CollectionReference forAlbum = Utility.getCollectionReferenceForAlbum(courseId); //test lang
+        final CollectionReference forAlbum = Utility.getCollectionReferenceForAlbum(courseId); //test lang
 
         imageReference.putFile(uri).addOnSuccessListener(taskSnapshot -> {
                     imageReference.getDownloadUrl().addOnSuccessListener(uriResult -> {
                         DataClass dataClass = new DataClass(uriResult.toString(), caption);
 
                         forAlbum.add(dataClass)
-                                .addOnSuccessListener(documentReference -> {
+                                .addOnSuccessListener(CollectionReference -> {
                                     progressBar.setVisibility(View.INVISIBLE);
                                     Toast.makeText(AddtoAlbum.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(AddtoAlbum.this, CourseDetails.class);
-                                    startActivity(intent);
+                                    //Intent intent = new Intent(AddtoAlbum.this, CourseDetails.class);
+                                    //startActivity(intent);
                                     finish();
                                 })
                                 .addOnFailureListener(e -> {

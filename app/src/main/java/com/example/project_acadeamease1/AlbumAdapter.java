@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 public class AlbumAdapter extends BaseAdapter {
+
 
     private ArrayList<DataClass> dataList;
     private Context context;
@@ -57,22 +59,25 @@ public class AlbumAdapter extends BaseAdapter {
         ImageView gridImage = view.findViewById(R.id.gridImage);
         TextView gridCaption = view.findViewById(R.id.gridCaption);
 
+
         DataClass item = dataList.get(i);
         gridCaption.setText(item.getCaption());
 
         Glide.with(context).load(item.getImageURL()).into(gridImage);
-
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, FullImage.class);
                 intent.putExtra("imageUrl", item.getImageURL());
+
                 context.startActivity(intent);
             }
         });
 
+
         return view;
     }
+
 
 }

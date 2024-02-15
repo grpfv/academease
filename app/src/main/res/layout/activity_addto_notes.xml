@@ -1,88 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:background="#EFF0EE"
     tools:context=".AddtoNotes">
 
-    <RelativeLayout
-        android:id="@+id/title_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/page_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ADD NOTES"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            android:textColor="@color/green"
-            tools:ignore="RelativeOverlap" />
-
-        <ImageButton
-            android:id="@+id/save_note_btn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/savenotebtn"
-            android:src="@drawable/done_btn"
-            tools:ignore="TouchTargetSizeCheck" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title_bar"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:layout_marginVertical="26dp"
-        android:backgroundTint="@color/white"
-        android:background="@drawable/border">
-
-        <EditText
-            android:id="@+id/notes_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp"
-            android:autofillHints=""
-            android:hint="Title"
-            android:inputType="text|textCapSentences"
-            android:padding="12dp"
-            android:textColor="@color/black"
-            android:textSize="26sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/notes_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp"
-            android:autofillHints=""
-            android:gravity="top"
-            android:hint="@string/notescontent"
-            android:inputType="none"
-            android:minLines="16"
-            android:padding="12dp"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-    </LinearLayout>
 
     <TextView
-        android:id="@+id/delete_note"
+        android:id="@+id/page_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="@string/notestitle"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#113946"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="ADD NOTES" />
+
+    <EditText
+        android:id="@+id/notes_title"
+        android:layout_width="336dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
+        android:autofillHints=""
+        android:background="@drawable/textboxbg2"
+        android:gravity="center"
+        android:hint="@string/add_title"
+        android:inputType="text"
+        android:textColor="#113946"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/page_title"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/notes_content"
+        android:layout_width="336dp"
+        android:layout_height="400dp"
+        android:gravity="top"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="40dp"
+        android:autofillHints=" ..."
+        android:background="@drawable/textboxbg2"
+        android:inputType="text|textEnableTextConversionSuggestions|textImeMultiLine|textMultiLine"
+        android:singleLine="false"
+        android:textColor="#113946"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notes_title"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <ImageView
+        android:id="@+id/mic"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:onClick="micCLick"
+        app:layout_constraintBottom_toTopOf="@+id/save_note_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notes_content"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/voice"
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"
+        android:contentDescription="@string/mic" />
+
+
+    <ImageView
+        android:id="@+id/camera"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:onClick="camCLick"
+        app:layout_constraintBottom_toTopOf="@+id/save_note_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notes_content"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/camera"
+        tools:ignore="HardcodedText,SpeakableTextPresentCheck,TouchTargetSizeCheck"
+        android:contentDescription="TODO"
+        android:focusable="true" />
+
+    <Button
+        android:id="@+id/save_note_btn"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/buttonbg"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="@string/savenotebtt"
+        android:textColor="#FFF2D8"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/deleteNoteBtn"
         android:layout_width="104dp"
         android:layout_height="51dp"
-        android:text="DELETE NOTE"
         android:layout_alignParentBottom="true"
         android:gravity="center"
+        android:text="DELETE NOTE"
         android:visibility="gone"
-        android:textColor="#FF4646"
-        android:textStyle="bold"/>
 
-</RelativeLayout>
+        android:textColor="#FF4646"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.983"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

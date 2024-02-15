@@ -42,11 +42,6 @@ public class Tab_album extends Fragment {
         courseId = getCourseId(requireContext()); // Retrieve courseId
     }
 
-    private String getCourseId(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        return sharedPreferences.getString("courseId", "");
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,11 +50,11 @@ public class Tab_album extends Fragment {
         fab = view.findViewById(R.id.fab);
         gridView = view.findViewById(R.id.gridView);
         dataList = new ArrayList<>();
-        adapter = new AlbumAdapter(requireContext(), dataList); // Pass albumCollection to the adapter
+        adapter = new AlbumAdapter(requireContext(), dataList);
         gridView.setAdapter(adapter);
 
-        CollectionReference databaseReference = Utility.getCollectionReferenceForAlbum(courseId);
-        databaseReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        CollectionReference firestoreReference = Utility.getCollectionReferenceForAlbum(courseId);
+        firestoreReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
                 if (e != null) {
@@ -67,7 +62,7 @@ public class Tab_album extends Fragment {
                     return;
                 }
 
-                dataList.clear(); // Clear the list before adding new data
+                dataList.clear();
                 for (QueryDocumentSnapshot document : querySnapshot) {
                     DataClass dataClass = document.toObject(DataClass.class);
                     dataList.add(dataClass);
@@ -79,11 +74,17 @@ public class Tab_album extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(requireContext(), AddtoAlbum.class); // use requireContext() instead of "Tab_album.this"
+                Intent intent = new Intent(requireContext(), AddtoAlbum.class);
+                intent.putExtra("courseId", courseId);
                 startActivity(intent);
             }
         });
 
         return view;
+    }
+
+    private String getCourseId(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("courseId", "");
     }
 }
